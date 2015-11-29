@@ -14,6 +14,7 @@ Joint F2;
 Joint R1;
 Joint R2;
 
+//init beatCounters
 Metronome puppetBeats;
 Metronome botBeats;
 
@@ -28,7 +29,7 @@ void setup() {
     pwmDriver.setPWMFreq(60);
 
     F1.init(pwmDriver, 0, 0, 1, 0);
-    F2.init(pwmDriver, 1, 0, 1, 0);
+    F2.init(pwmDriver, 1, 0, -1, 0);
     R1.init(pwmDriver, 2, 0, -1, 0);
     R2.init(pwmDriver, 3, 0, 1, 0);
 
@@ -65,7 +66,8 @@ void updateBeats() {
     if (botBeats.triggerBeat()) { }
 
     if (botBeats.triggerBar()) {
-        puppet.flyCycles(5);
+        puppet.flyFor(5);
+        puppet.walkFor(5);
     }
 }
 

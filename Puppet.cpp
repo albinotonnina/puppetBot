@@ -8,12 +8,12 @@ void Puppet::init(Metronome &_metronome, Joint &_F1, Joint &_F2, Joint &_R1, Joi
     R2 = &_R2;
 
     isFlying = false;
+    isWalking = false;
 }
 
 void Puppet::start() {
-    orientation = false;
-    direction = 1; // 1, -1
-
+    toggleWalk = false;
+    toggleFly = false;
     beats->start(120);
 }
 
@@ -23,16 +23,15 @@ void Puppet::update() {
 
     if (beats->triggerBeat()) {
 
-        animCycle--;
-
-        if (animCycle >= 0) {
-
-            if (isFlying) { fly(); }
-
-        } else {
-            animCycle = 0;
+        if (walkCycles > 0) {
+            walk();
+            walkCycles--;
         }
 
+        if (flyCycle > 0) {
+            fly();
+            flyCycle--;
+        }
 
     }
 
@@ -41,40 +40,42 @@ void Puppet::update() {
 
 }
 
-void Puppet::walk(float duration) {
+void Puppet::walkFor(int cycles) {
 
-    beats->setBPM(80.0);
+    if (walkCycles == 0) {
+        walkCycles = cycles * 2;
+    }
 
-    float angle = 45;
+}
 
-    orientation = !orientation;
+void Puppet::walk() {
+    beats->setBPM(180.0);
 
-    if (orientation) {
-        F1->tween(angle, duration, Joint::EaseIn);
-        F2->tween(angle * -1, duration, Joint::EaseOut);
+    toggleWalk = !toggleWalk;
+
+    if (toggleWalk) {
+        riseRightLeg();
+        dropLeftLeg();
     } else {
-        F1->tween(angle * -1, duration, Joint::EaseOut);
-        F2->tween(angle, duration, Joint::EaseIn);
+        riseLeftLeg();
+        dropRightLeg();
     }
 }
 
-void Puppet::flyCycles(int cycles) {
-    isFlying = true;
+void Puppet::flyFor(int cycles) {
 
-    if (animCycle == 0) {
-        animCycle = cycles * 2;
+    if (flyCycle == 0) {
+        flyCycle = cycles * 2;
     }
 
-    F1->move(0);
-    F2->move(0);
 }
 
 void Puppet::fly() {
     beats->setBPM(160.0);
 
-    orientation = !orientation;
+    toggleFly = !toggleFly;
 
-    if (orientation) {
+    if (toggleFly) {
         riseLeftWing();
         riseRightWing();
     } else {
@@ -99,7 +100,6 @@ void Puppet::dropLeftWing() {
 void Puppet::dropRightWing() {
     R2->tween(0, 0.2, Joint::EaseOut);
 }
-
 
 void Puppet::riseLeftLeg() {
     F1->tween(45, 0.2, Joint::EaseIn);
