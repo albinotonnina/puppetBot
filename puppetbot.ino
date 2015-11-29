@@ -31,7 +31,7 @@ void setup() {
     R1.init(pwmDriver, 2, 15, -1, 0);
     R2.init(pwmDriver, 3, 15, 1, 0);
 
-    puppet.init(F1, F2, R1, R2);
+    puppet.init(metronome, F1, F2, R1, R2);
     puppet.start();
 
     metronome.start(90);
@@ -44,37 +44,10 @@ void loop() {
 
 void updateJoints() {
 
-    updateMetronome();
-
     puppet.update();
 
     F1.update(currentTime);
     F2.update(currentTime);
     R1.update(currentTime);
     R2.update(currentTime);
-}
-
-void updateMetronome() {
-
-    // Set BPM to pot value
-    // float bpmScalar = (float)analogRead(bpmPotPin) / 1023;
-    metronome.setBPM(90.0);
-
-    // update the metronome timer
-    metronome.update();
-
-    if (metronome.triggerSection()) {
-        Serial.println("section");
-    }
-
-    if (metronome.triggerBeat()) {
-//		Serial.print("beat ");
-//		puppet.onBeatStart(metronome.spb);
-        puppet.fly(metronome.spb);
-    }
-
-    if (metronome.triggerBar()) {
-//		Serial.println("bar ");
-        //puppet.onBarStart(metronome.spb * 4.0);
-    }
 }
