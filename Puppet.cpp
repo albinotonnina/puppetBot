@@ -61,7 +61,7 @@ void Puppet::walk(float duration) {
 void Puppet::flyCycles(int cycles) {
     isFlying = true;
 
-    if(animCycle == 0){
+    if (animCycle == 0) {
         animCycle = cycles * 2;
     }
 
@@ -99,7 +99,6 @@ void Puppet::dropLeftWing() {
 void Puppet::dropRightWing() {
     R2->tween(0, 0.2, Joint::EaseOut);
 }
-
 
 
 void Puppet::riseLeftLeg() {

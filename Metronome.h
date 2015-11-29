@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 class Metronome {
-  public:
+public:
     float bpm;
     float bps;
     float spb;
@@ -21,11 +21,16 @@ class Metronome {
     int sectionsPassed;
 
     void start(float bpm);
+
     void setBPM(float bpm);
+
     void update();
 
     bool triggerBeat();
+
     bool triggerBar();
+
     bool triggerSection();
 };
+
 #endif

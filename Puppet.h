@@ -37,14 +37,21 @@ public:
 
 private:
     void fly();
+
     void riseLeftWing();
+
     void riseRightWing();
+
     void dropLeftWing();
+
     void dropRightWing();
 
     void riseLeftLeg();
+
     void riseRightLeg();
+
     void dropLeftLeg();
+
     void dropRightLeg();
 };
 
