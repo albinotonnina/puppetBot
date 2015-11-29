@@ -15,6 +15,8 @@ public:
     Joint *R1;
     Joint *R2;
 
+
+
     void init(
             Metronome &_metronome,
             Joint &_F1,
@@ -31,35 +33,42 @@ public:
 
     void walkFor(int cycles);
 
+    void waveFor(int cycles);
+
 private:
 
     bool toggleWalk;
     bool toggleFly;
+    bool toggleWave;
     int walkCycles;
-    int flyCycle;
+    int flyCycles;
+    int waveCycles;
 
     bool isFlying;
     bool isWalking;
+    bool isWaving;
 
     void fly();
 
     void walk();
 
-    void riseLeftWing();
+    void wave();
 
-    void riseRightWing();
+    void riseLeftWing(int degrees = 45);
 
-    void dropLeftWing();
+    void riseRightWing(int degrees = 45);
 
-    void dropRightWing();
+    void dropLeftWing(int degrees = 0);
 
-    void riseLeftLeg();
+    void dropRightWing(int degrees = 0);
 
-    void riseRightLeg();
+    void riseLeftLeg(int degrees = 45);
 
-    void dropLeftLeg();
+    void riseRightLeg(int degrees = 45);
 
-    void dropRightLeg();
+    void dropLeftLeg(int degrees = 0);
+
+    void dropRightLeg(int degrees = 0);
 };
 
 #endif
