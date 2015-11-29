@@ -1,7 +1,7 @@
 #include "Puppet.h"
 
 void Puppet::init(Metronome &_metronome, Joint &_F1, Joint &_F2, Joint &_R1, Joint &_R2) {
-    bits = &_metronome;
+    beats = &_metronome;
     F1 = &_F1;
     F2 = &_F2;
     R1 = &_R1;
@@ -9,47 +9,52 @@ void Puppet::init(Metronome &_metronome, Joint &_F1, Joint &_F2, Joint &_R1, Joi
 }
 
 void Puppet::start() {
-    orientation = (random(0, 2) == 0);
-    direction = (random(0, 2) == 0 ? 1 : -1);
+    orientation = true;
+    direction = 1; // 1, -1
 }
 
 void Puppet::update() {
 
-    bits->update();
+    beats->update();
 
-    if (bits->triggerSection()) {
-//        Serial.println("section");
+    if (beats->triggerSection()) {
+
     }
 
-    if (bits->triggerBeat()) {
-//        Serial.print("beat ");
-        walk(bits->spb);
+    if (beats->triggerBeat()) {
+        walk(beats->spb);
     }
 
-    if (bits->triggerBar()) {
-
+    if (beats->triggerBar()) {
+        fly(beats->spb);
     }
 
 
 }
 
 void Puppet::walk(float duration) {
+    beats->setBPM(80.0);
 
-    bits->setBPM(90.0);
+    float angle = 45;
 
-    float Joint1angle = 45 * direction;
-    direction *= -1;
-    float Joint1angle2 = 45 * direction;
+    orientation = !orientation;
 
-//    F1->tween(Joint1angle, duration, Joint::EaseOut);
-//    F2->tween(Joint1angle2, duration, Joint::EaseOut);
+    if (orientation) {
+        F1->tween(angle, duration, Joint::EaseIn);
+        F2->tween(angle * -1, duration, Joint::EaseOut);
+    } else {
+        F1->tween(angle * -1, duration, Joint::EaseOut);
+        F2->tween(angle, duration, Joint::EaseIn);
+    }
 }
 
 void Puppet::fly(float duration) {
+    beats->setBPM(80.0);
+
     direction *= -1;
     float Joint1angle = 45 * direction;
 
-//    R1->tween(Joint1angle, duration, Joint::EaseOut);
-//    R2->tween(Joint1angle, duration, Joint::EaseOut);
+    R1->tween(Joint1angle, duration, Joint::EaseOut);
+    R2->tween(Joint1angle, duration, Joint::EaseOut);
 }
 

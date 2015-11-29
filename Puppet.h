@@ -10,7 +10,7 @@ public:
     float direction;
     bool orientation;
 
-    Metronome *bits;
+    Metronome *beats;
     Joint *F1;
     Joint *F2;
     Joint *R1;
@@ -27,10 +27,6 @@ public:
     void start();
 
     void update();
-
-    void onBeatStart(float duration);
-
-    void onBarStart(float duration);
 
     void walk(float duration);
 
