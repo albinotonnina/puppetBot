@@ -16,6 +16,21 @@ void Joint::init(Adafruit_PWMServoDriver& _pwmDriver, int _pin, float _offset, f
   move(currentAngle);
 }
 
+void Joint::rotate(float speed, bool direction) {
+
+  int myabsAngle = map(speed, 0, 10, 0, 10);
+
+  float absAngle = 90 - offset - myabsAngle;
+
+  if(direction){
+    absAngle = 90 + myabsAngle;
+  }
+
+  uint16_t pulseLen = map(absAngle, 0, 90, SERVOMIN, SERVOMAX);
+
+  pwmDriver->setPWM(pin, 0, pulseLen);
+}
+
 void Joint::tween(float angle, float duration) {
   tween(angle, duration, EaseInOut);
 }

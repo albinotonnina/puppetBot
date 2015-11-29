@@ -1,21 +1,20 @@
 #include "Puppet.h"
 
-void Puppet::init(Metronome &_metronome, Joint &_F1, Joint &_F2, Joint &_R1, Joint &_R2) {
+void Puppet::init(Metronome &_metronome, Joint &_F1, Joint &_F2, Joint &_R1, Joint &_R2, Joint &_HEAD) {
     beats = &_metronome;
     F1 = &_F1;
     F2 = &_F2;
     R1 = &_R1;
     R2 = &_R2;
+    HEAD = &_HEAD;
 
-    isFlying = false;
-    isWalking = false;
-    isWaving = false;
 }
 
 void Puppet::start() {
     toggleWalk = false;
     toggleFly = false;
     toggleWave = false;
+    toggleNoddle = false;
     beats->start(120);
 }
 
@@ -25,19 +24,24 @@ void Puppet::update() {
 
     if (beats->triggerBeat()) {
 
-        if (walkCycles > 0) {
+        if (walkBeats > 0) {
             walk();
-            walkCycles--;
+            walkBeats--;
         }
 
-        if (flyCycles > 0) {
+        if (flyBeats > 0) {
             fly();
-            flyCycles--;
+            flyBeats--;
         }
 
-        if (waveCycles > 0) {
+        if (waveBeats > 0) {
             wave();
-            waveCycles--;
+            waveBeats--;
+        }
+
+        if (nodBeats > 0) {
+            nod();
+            nodBeats--;
         }
 
     }
@@ -48,31 +52,43 @@ void Puppet::update() {
 }
 
 void Puppet::walkFor(int cycles) {
+    //beats->setBPM(180.0);
 
-    if (walkCycles == 0) {
-        walkCycles = cycles * 2;
+    if (walkBeats == 0) {
+        walkBeats = cycles * 2;
     }
 
 }
 
 void Puppet::flyFor(int cycles) {
+    //beats->setBPM(160.0);
 
-    if (flyCycles == 0) {
-        flyCycles = cycles * 2;
+    if (flyBeats == 0) {
+        flyBeats = cycles * 2;
     }
 
 }
 
 void Puppet::waveFor(int cycles) {
 
-    if (waveCycles == 0) {
-        waveCycles = cycles * 2;
+    //beats->setBPM(200.0);
+
+    if (waveBeats == 0) {
+        waveBeats = cycles * 2;
+    }
+
+}
+
+void Puppet::nodFor(int cycles) {
+  //  beats->setBPM(20.0);
+
+    if (nodBeats == 0) {
+        nodBeats = cycles * 2;
     }
 
 }
 
 void Puppet::walk() {
-    beats->setBPM(180.0);
 
     toggleWalk = !toggleWalk;
 
@@ -87,7 +103,6 @@ void Puppet::walk() {
 
 
 void Puppet::fly() {
-    beats->setBPM(160.0);
 
     toggleFly = !toggleFly;
 
@@ -102,7 +117,6 @@ void Puppet::fly() {
 
 
 void Puppet::wave() {
-    beats->setBPM(200.0);
 
     toggleWave = !toggleWave;
 
@@ -110,6 +124,17 @@ void Puppet::wave() {
         riseLeftWing(30);
     } else {
         dropLeftWing();
+    }
+};
+
+void Puppet::nod() {
+
+    toggleNoddle = !toggleNoddle;
+
+    if (toggleNoddle) {
+        nodUp(6);
+    } else {
+        nodDown(6);
     }
 };
 
@@ -144,6 +169,14 @@ void Puppet::dropLeftLeg(int degrees) {
 
 void Puppet::dropRightLeg(int degrees) {
     F2->tween(degrees, 0.2, Joint::EaseOut);
+}
+
+void Puppet::nodUp(int speed) {
+    HEAD->rotate(speed, true);
+}
+
+void Puppet::nodDown(int speed) {
+    HEAD->rotate(speed, false);
 }
 
 

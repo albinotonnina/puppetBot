@@ -14,7 +14,7 @@ public:
     Joint *F2;
     Joint *R1;
     Joint *R2;
-
+    Joint *HEAD;
 
 
     void init(
@@ -22,7 +22,8 @@ public:
             Joint &_F1,
             Joint &_F2,
             Joint &_R1,
-            Joint &_R2
+            Joint &_R2,
+            Joint &_HEAD
     );
 
     void start();
@@ -35,14 +36,18 @@ public:
 
     void waveFor(int cycles);
 
+    void nodFor(int cycles);
+
 private:
 
     bool toggleWalk;
     bool toggleFly;
     bool toggleWave;
-    int walkCycles;
-    int flyCycles;
-    int waveCycles;
+    bool toggleNoddle;
+    int walkBeats;
+    int flyBeats;
+    int waveBeats;
+    int nodBeats;
 
     bool isFlying;
     bool isWalking;
@@ -53,6 +58,9 @@ private:
     void walk();
 
     void wave();
+
+    void nod();
+
 
     void riseLeftWing(int degrees = 45);
 
@@ -69,6 +77,10 @@ private:
     void dropLeftLeg(int degrees = 0);
 
     void dropRightLeg(int degrees = 0);
+
+    void nodUp(int speed = 0);
+
+    void nodDown(int speed = 0);
 };
 
 #endif

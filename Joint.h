@@ -36,6 +36,7 @@ class Joint {
     float tweenEndAngle;
     Easing tweenEasing;
 
+    void rotate(float speed, bool direction);
     void tween(float angle, float duration);
     void tween(float angle, float duration, Easing easing);
     float tweenCompletion();
