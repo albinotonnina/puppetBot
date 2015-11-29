@@ -9,6 +9,9 @@ class Puppet {
 public:
     float direction;
     bool orientation;
+    bool isFlying;
+
+    int animCycle;
 
     Metronome *beats;
     Joint *F1;
@@ -30,8 +33,19 @@ public:
 
     void walk(float duration);
 
-    void fly(float duration);
+    void flyCycles(int cycles);
 
+private:
+    void fly();
+    void riseLeftWing();
+    void riseRightWing();
+    void dropLeftWing();
+    void dropRightWing();
+
+    void riseLeftLeg();
+    void riseRightLeg();
+    void dropLeftLeg();
+    void dropRightLeg();
 };
 
 #endif

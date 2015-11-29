@@ -14,7 +14,8 @@ Joint F2;
 Joint R1;
 Joint R2;
 
-Metronome metronome;
+Metronome puppetBeats;
+Metronome botBeats;
 
 Puppet puppet;
 
@@ -26,15 +27,15 @@ void setup() {
     pwmDriver.begin();
     pwmDriver.setPWMFreq(60);
 
-    F1.init(pwmDriver, 0, 15, -1, 0);
-    F2.init(pwmDriver, 1, 15, 1, 0);
-    R1.init(pwmDriver, 2, 15, -1, 0);
-    R2.init(pwmDriver, 3, 15, 1, 0);
+    F1.init(pwmDriver, 0, 0, 1, 0);
+    F2.init(pwmDriver, 1, 0, 1, 0);
+    R1.init(pwmDriver, 2, 0, -1, 0);
+    R2.init(pwmDriver, 3, 0, 1, 0);
 
-    puppet.init(metronome, F1, F2, R1, R2);
+    puppet.init(puppetBeats, F1, F2, R1, R2);
     puppet.start();
 
-    metronome.start(90);
+    botBeats.start(15);
 }
 
 void loop() {
@@ -44,6 +45,8 @@ void loop() {
 
 void updateJoints() {
 
+    updateBeats();
+
     puppet.update();
 
     F1.update(currentTime);
@@ -51,3 +54,18 @@ void updateJoints() {
     R1.update(currentTime);
     R2.update(currentTime);
 }
+
+void updateBeats() {
+
+    // update the botBeats timer
+    botBeats.update();
+
+    if (botBeats.triggerSection()) { }
+
+    if (botBeats.triggerBeat()) { }
+
+    if (botBeats.triggerBar()) {
+        puppet.flyCycles(5);
+    }
+}
+

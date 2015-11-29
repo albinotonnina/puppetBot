@@ -6,33 +6,43 @@ void Puppet::init(Metronome &_metronome, Joint &_F1, Joint &_F2, Joint &_R1, Joi
     F2 = &_F2;
     R1 = &_R1;
     R2 = &_R2;
+
+    isFlying = false;
 }
 
 void Puppet::start() {
-    orientation = true;
+    orientation = false;
     direction = 1; // 1, -1
+
+    beats->start(120);
 }
 
 void Puppet::update() {
 
     beats->update();
 
-    if (beats->triggerSection()) {
-
-    }
-
     if (beats->triggerBeat()) {
-        walk(beats->spb);
+
+        animCycle--;
+
+        if (animCycle >= 0) {
+
+            if (isFlying) { fly(); }
+
+        } else {
+            animCycle = 0;
+        }
+
+
     }
 
-    if (beats->triggerBar()) {
-        fly(beats->spb);
-    }
-
+    if (beats->triggerBar()) { }
+    if (beats->triggerSection()) { }
 
 }
 
 void Puppet::walk(float duration) {
+
     beats->setBPM(80.0);
 
     float angle = 45;
@@ -48,13 +58,65 @@ void Puppet::walk(float duration) {
     }
 }
 
-void Puppet::fly(float duration) {
-    beats->setBPM(80.0);
+void Puppet::flyCycles(int cycles) {
+    isFlying = true;
 
-    direction *= -1;
-    float Joint1angle = 45 * direction;
+    if(animCycle == 0){
+        animCycle = cycles * 2;
+    }
 
-    R1->tween(Joint1angle, duration, Joint::EaseOut);
-    R2->tween(Joint1angle, duration, Joint::EaseOut);
+    F1->move(0);
+    F2->move(0);
 }
+
+void Puppet::fly() {
+    beats->setBPM(160.0);
+
+    orientation = !orientation;
+
+    if (orientation) {
+        riseLeftWing();
+        riseRightWing();
+    } else {
+        dropLeftWing();
+        dropRightWing();
+    }
+};
+
+
+void Puppet::riseLeftWing() {
+    R1->tween(45, 0.2, Joint::EaseIn);
+}
+
+void Puppet::riseRightWing() {
+    R2->tween(45, 0.2, Joint::EaseIn);
+}
+
+void Puppet::dropLeftWing() {
+    R1->tween(0, 0.2, Joint::EaseOut);
+}
+
+void Puppet::dropRightWing() {
+    R2->tween(0, 0.2, Joint::EaseOut);
+}
+
+
+
+void Puppet::riseLeftLeg() {
+    F1->tween(45, 0.2, Joint::EaseIn);
+}
+
+void Puppet::riseRightLeg() {
+    F2->tween(45, 0.2, Joint::EaseIn);
+}
+
+void Puppet::dropLeftLeg() {
+    F1->tween(0, 0.2, Joint::EaseOut);
+}
+
+void Puppet::dropRightLeg() {
+    F2->tween(0, 0.2, Joint::EaseOut);
+}
+
+
 
