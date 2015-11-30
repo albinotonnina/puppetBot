@@ -43,7 +43,7 @@ void Puppet::update() {
         if (nodBeats > 0) {
             nod();
             nodBeats--;
-        }else{
+        } else {
             stopNod();
         }
 
@@ -136,11 +136,7 @@ void Puppet::nod() {
     }
 };
 
-void Puppet::stopNod() {
 
-    HEAD->tween(90, 1.2, Joint::EaseOut);
-
-};
 
 
 void Puppet::riseLeftWing(int degrees) {
@@ -176,12 +172,20 @@ void Puppet::dropRightLeg(int degrees) {
 }
 
 void Puppet::nodUp(int speed) {
-    HEAD->rotate(90, 0.2);
+
+
+    Serial.print("nod up.. ");
+    HEAD->rotate(80, 0.2);
 }
 
 void Puppet::nodDown(int speed) {
-    HEAD->rotate(180, 0.2);
+    Serial.print("nod down.. ");
+    HEAD->rotate(90, 0.2);
 }
 
+void Puppet::stopNod() {
+    Serial.println("stop nodding");
+    HEAD->stop();
+};
 
 
