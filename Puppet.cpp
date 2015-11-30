@@ -22,6 +22,7 @@ void Puppet::update() {
 
     beats->update();
 
+
     if (beats->triggerBeat()) {
 
         if (walkBeats > 0) {
@@ -42,6 +43,8 @@ void Puppet::update() {
         if (nodBeats > 0) {
             nod();
             nodBeats--;
+        }else{
+            stopNod();
         }
 
     }
@@ -52,7 +55,6 @@ void Puppet::update() {
 }
 
 void Puppet::walkFor(int cycles) {
-    //beats->setBPM(180.0);
 
     if (walkBeats == 0) {
         walkBeats = cycles * 2;
@@ -61,7 +63,6 @@ void Puppet::walkFor(int cycles) {
 }
 
 void Puppet::flyFor(int cycles) {
-    //beats->setBPM(160.0);
 
     if (flyBeats == 0) {
         flyBeats = cycles * 2;
@@ -71,8 +72,6 @@ void Puppet::flyFor(int cycles) {
 
 void Puppet::waveFor(int cycles) {
 
-    //beats->setBPM(200.0);
-
     if (waveBeats == 0) {
         waveBeats = cycles * 2;
     }
@@ -80,7 +79,6 @@ void Puppet::waveFor(int cycles) {
 }
 
 void Puppet::nodFor(int cycles) {
-  //  beats->setBPM(20.0);
 
     if (nodBeats == 0) {
         nodBeats = cycles * 2;
@@ -138,6 +136,12 @@ void Puppet::nod() {
     }
 };
 
+void Puppet::stopNod() {
+
+    HEAD->tween(90, 1.2, Joint::EaseOut);
+
+};
+
 
 void Puppet::riseLeftWing(int degrees) {
     R1->tween(degrees, 0.2, Joint::EaseIn);
@@ -172,11 +176,11 @@ void Puppet::dropRightLeg(int degrees) {
 }
 
 void Puppet::nodUp(int speed) {
-    HEAD->rotate(speed, true);
+    HEAD->rotate(90, 0.2);
 }
 
 void Puppet::nodDown(int speed) {
-    HEAD->rotate(speed, false);
+    HEAD->rotate(180, 0.2);
 }
 
 

@@ -84,3 +84,7 @@ void Joint::move(float angle) {
   uint16_t pulseLen = map(absAngle, 0, 180, SERVOMIN, SERVOMAX);
   pwmDriver->setPWM(pin, 0, pulseLen);
 }
+
+void Joint::stop() {
+  pwmDriver->setPWM(pin, 0, 4096);
+}

@@ -61,6 +61,8 @@ private:
 
     void nod();
 
+    void stopNod();
+
 
     void riseLeftWing(int degrees = 45);
 

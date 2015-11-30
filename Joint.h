@@ -42,6 +42,7 @@ class Joint {
     float tweenCompletion();
 
     void update(float currentTime);
+    void stop();
     void move(float angle);
 
   private:
