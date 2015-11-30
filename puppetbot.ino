@@ -69,7 +69,7 @@ void updateBeats() {
     if (botBeats.triggerBeat()) { }
 
     if (botBeats.triggerBar()) {
-        puppet.nodFor(5);
+        puppet.stopNod();
 //        puppet.flyFor(5);
 //        puppet.walkFor(5);
 //        puppet.waveFor(5);

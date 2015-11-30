@@ -38,6 +38,8 @@ public:
 
     void nodFor(int cycles);
 
+    void stopNod();
+
 private:
 
     bool toggleWalk;
@@ -60,8 +62,6 @@ private:
     void wave();
 
     void nod();
-
-    void stopNod();
 
 
     void riseLeftWing(int degrees = 45);
