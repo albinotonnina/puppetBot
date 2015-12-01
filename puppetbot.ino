@@ -64,12 +64,14 @@ void updateBeats() {
     // update the botBeats timer
     botBeats.update();
 
-    if (botBeats.triggerSection()) { }
+    if (botBeats.triggerSection()) {
+//        puppet.nodFor(2);
+    }
 
     if (botBeats.triggerBeat()) { }
 
     if (botBeats.triggerBar()) {
-        puppet.stopNod();
+//        puppet.stopNod();
 //        puppet.flyFor(5);
 //        puppet.walkFor(5);
 //        puppet.waveFor(5);

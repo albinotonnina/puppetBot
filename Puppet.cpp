@@ -15,7 +15,7 @@ void Puppet::start() {
     toggleFly = false;
     toggleWave = false;
     toggleNoddle = false;
-    beats->start(120);
+    beats->start(90);
 }
 
 void Puppet::update() {
@@ -140,35 +140,35 @@ void Puppet::nod() {
 
 
 void Puppet::riseLeftWing(int degrees) {
-    R1->tween(degrees, 0.2, Joint::EaseIn);
+    R1->tween(degrees, 0.4, Joint::EaseIn);
 }
 
 void Puppet::riseRightWing(int degrees) {
-    R2->tween(degrees, 0.2, Joint::EaseIn);
+    R2->tween(degrees, 0.4, Joint::EaseIn);
 }
 
 void Puppet::dropLeftWing(int degrees) {
-    R1->tween(degrees, 0.2, Joint::EaseOut);
+    R1->tween(degrees, 0.4, Joint::EaseOut);
 }
 
 void Puppet::dropRightWing(int degrees) {
-    R2->tween(degrees, 0.2, Joint::EaseOut);
+    R2->tween(degrees, 0.4, Joint::EaseOut);
 }
 
 void Puppet::riseLeftLeg(int degrees) {
-    F1->tween(degrees, 0.2, Joint::EaseIn);
+    F1->tween(degrees, 0.4, Joint::EaseIn);
 }
 
 void Puppet::riseRightLeg(int degrees) {
-    F2->tween(degrees, 0.2, Joint::EaseIn);
+    F2->tween(degrees, 0.4, Joint::EaseIn);
 }
 
 void Puppet::dropLeftLeg(int degrees) {
-    F1->tween(degrees, 0.2, Joint::EaseOut);
+    F1->tween(degrees, 0.4, Joint::EaseOut);
 }
 
 void Puppet::dropRightLeg(int degrees) {
-    F2->tween(degrees, 0.2, Joint::EaseOut);
+    F2->tween(degrees, 0.4, Joint::EaseOut);
 }
 
 void Puppet::nodUp(int speed) {
