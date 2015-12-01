@@ -3,7 +3,7 @@
 #include "Joint.h"
 
 #include "Puppet.h"
-#include "Metronome.h"
+#include "Beats.h"
 
 Adafruit_PWMServoDriver pwmDriver = Adafruit_PWMServoDriver();
 
@@ -16,8 +16,8 @@ Joint R2;
 Joint HEAD;
 
 //init beatCounters
-Metronome puppetBeats;
-Metronome botBeats;
+Beats puppetBeats;
+Beats botBeats;
 
 Puppet puppet;
 
@@ -49,7 +49,6 @@ void loop() {
 void updateJoints() {
 
     updateBeats();
-
     puppet.update();
 
     F1.update(currentTime);
@@ -64,9 +63,7 @@ void updateBeats() {
     // update the botBeats timer
     botBeats.update();
 
-    if (botBeats.triggerSection()) {
-//        puppet.nodFor(2);
-    }
+    if (botBeats.triggerSection()) {}
 
     if (botBeats.triggerBeat()) { }
 

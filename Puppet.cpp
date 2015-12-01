@@ -1,7 +1,7 @@
 #include "Puppet.h"
 
-void Puppet::init(Metronome &_metronome, Joint &_F1, Joint &_F2, Joint &_R1, Joint &_R2, Joint &_HEAD) {
-    beats = &_metronome;
+void Puppet::init(Beats &_beats, Joint &_F1, Joint &_F2, Joint &_R1, Joint &_R2, Joint &_HEAD) {
+    beats = &_beats;
     F1 = &_F1;
     F2 = &_F2;
     R1 = &_R1;

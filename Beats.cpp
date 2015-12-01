@@ -1,19 +1,19 @@
-#include "Metronome.h"
+#include "Beats.h"
 
-void Metronome::start(float _bpm) {
+void Beats::start(float _bpm) {
     setBPM(_bpm);
     lastTime = (float) millis() / 1000;
     beatsTime = 0;
     triggerBar();
 }
 
-void Metronome::setBPM(float _bpm) {
+void Beats::setBPM(float _bpm) {
     bpm = _bpm;
     bps = bpm / 60.0;
     spb = 1.0 / bps;
 }
 
-void Metronome::update() {
+void Beats::update() {
     float time = (float) millis() / 1000;
     float diff = (time - lastTime) * bps;
     lastTime = time;
@@ -25,7 +25,7 @@ void Metronome::update() {
     sectionsPassed = floor(beatsTime / 16.0);
 }
 
-bool Metronome::triggerBeat() {
+bool Beats::triggerBeat() {
     if (beatsPassed > beatsTriggered) {
         beatsTriggered = beatsPassed;
         return true;
@@ -33,7 +33,7 @@ bool Metronome::triggerBeat() {
     return false;
 }
 
-bool Metronome::triggerBar() {
+bool Beats::triggerBar() {
     if (barsPassed > barsTriggered or beatsTime == 0) {
         barsTriggered = barsPassed;
         return true;
@@ -41,7 +41,7 @@ bool Metronome::triggerBar() {
     return false;
 }
 
-bool Metronome::triggerSection() {
+bool Beats::triggerSection() {
     if (sectionsPassed > sectionsTriggered) {
         sectionsTriggered = sectionsPassed;
         return true;

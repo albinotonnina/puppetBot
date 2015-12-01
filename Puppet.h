@@ -3,13 +3,13 @@
 
 #include <Arduino.h>
 #include "Joint.h"
-#include "Metronome.h"
+#include "Beats.h"
 
 class Puppet {
 public:
 
 
-    Metronome *beats;
+    Beats *beats;
     Joint *F1;
     Joint *F2;
     Joint *R1;
@@ -18,7 +18,7 @@ public:
 
 
     void init(
-            Metronome &_metronome,
+            Beats &_beats,
             Joint &_F1,
             Joint &_F2,
             Joint &_R1,

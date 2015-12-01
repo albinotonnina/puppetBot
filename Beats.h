@@ -1,9 +1,9 @@
-#ifndef Metronome_H
-#define Metronome_H
+#ifndef Beats_H
+#define Beats_H
 
 #include <Arduino.h>
 
-class Metronome {
+class Beats {
 public:
     float bpm;
     float bps;
