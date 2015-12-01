@@ -44,7 +44,7 @@ void Puppet::update() {
             nod();
             nodBeats--;
         } else {
-            stopNod();
+            //stopNod();
         }
 
     }
