@@ -69,8 +69,8 @@ float Joint::tweenCompletion() {
   return completion;
 }
 
-void Joint::update(float _currentTime) {
-  currentTime = _currentTime;
+void Joint::update() {
+  currentTime = (float) millis() / 1000;
   float diff = tweenEndAngle - tweenStartAngle;
   if (abs(diff) > 0.0) {
     move(tweenStartAngle + diff * tweenCompletion());

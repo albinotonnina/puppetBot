@@ -41,7 +41,7 @@ class Joint {
     void tween(float angle, float duration, Easing easing);
     float tweenCompletion();
 
-    void update(float currentTime);
+    void update();
     void stop();
     void move(float angle);
 

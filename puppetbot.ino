@@ -7,8 +7,6 @@
 
 Adafruit_PWMServoDriver pwmDriver = Adafruit_PWMServoDriver();
 
-float currentTime;
-
 //init Joints
 Joint F1;
 Joint F2;
@@ -42,14 +40,12 @@ void initPuppet() {
     puppet.start();
 }
 
-void updateJoints() {
+void updatePuppet() {
     puppet.update();
+}
 
-    F1.update(currentTime);
-    F2.update(currentTime);
-    R1.update(currentTime);
-    R2.update(currentTime);
-    HEAD.update(currentTime);
+void initBeats(){
+    botBeats.start(); // Start timer
 }
 
 void updateBeats() {
@@ -90,14 +86,12 @@ void setup() {
     Serial.begin(9600);
 
     initPuppet();
-
-    botBeats.start(); // Start timer
+    initBeats();
     irrecv.enableIRIn(); // Start the receiver
 }
 
 
 void loop() {
-    currentTime = (float) millis() / 1000.0;
     updateBeats();
-    updateJoints();
+    updatePuppet();
 }

@@ -20,6 +20,12 @@ void Puppet::start() {
 
 void Puppet::update() {
 
+    F1->update();
+    F2->update();
+    R1->update();
+    R2->update();
+    HEAD->update();
+
     beats->update();
 
 
