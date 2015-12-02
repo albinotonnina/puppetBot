@@ -6,6 +6,7 @@ project(${PROJECT_NAME})
 set(${CMAKE_PROJECT_NAME}_SKETCH puppetbot.ino)
 
 set(${CMAKE_PROJECT_NAME}_BOARD uno)
+#set(${CMAKE_PROJECT_NAME}_BOARD nano328)
 set(${CMAKE_PROJECT_NAME}_PORT /dev/tty.usbmodem1421)
 
 link_directories(/Applications/Arduino.app/Contents/Java/libraries)
