@@ -15,7 +15,7 @@ void Puppet::start() {
     toggleFly = false;
     toggleWave = false;
     toggleNoddle = false;
-    beats->start(90);
+    beats->start();
 }
 
 void Puppet::update() {
@@ -49,8 +49,6 @@ void Puppet::update() {
 
     }
 
-    if (beats->triggerBar()) { }
-    if (beats->triggerSection()) { }
 
 }
 
@@ -172,8 +170,6 @@ void Puppet::dropRightLeg(int degrees) {
 }
 
 void Puppet::nodUp(int speed) {
-
-
     Serial.print("nod up.. ");
     HEAD->rotate(80, 0.2);
 }

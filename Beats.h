@@ -14,23 +14,19 @@ public:
 
     int beatsTriggered;
     int barsTriggered;
-    int sectionsTriggered;
 
+    int eighthsPassed;
     int beatsPassed;
-    int barsPassed;
-    int sectionsPassed;
 
-    void start(float bpm);
+    void start(float bpm = 60);
 
     void setBPM(float bpm);
 
     void update();
 
+    bool triggerEighth();
+
     bool triggerBeat();
-
-    bool triggerBar();
-
-    bool triggerSection();
 };
 
 #endif
