@@ -36,7 +36,7 @@ void initPuppet() {
     F2.init(pwmDriver, 1, 0, -1, 0);
     R1.init(pwmDriver, 2, 0, -1, 0);
     R2.init(pwmDriver, 3, 0, 1, 0);
-    HEAD.init(pwmDriver, 5, 1, 1, 90);
+    HEAD.init(pwmDriver, 4, 1, 1, 90);
 
     puppet.init(puppetBeats, F1, F2, R1, R2, HEAD);
     puppet.start();
@@ -74,6 +74,9 @@ void decodeIrCommands(){
                 break;
             case 0xFFB04F: //3
                 puppet.waveFor(5);
+                break;
+            case 0xFF30CF: //4
+                puppet.nodFor(5);
                 break;
         }
 

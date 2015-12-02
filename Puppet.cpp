@@ -23,7 +23,7 @@ void Puppet::update() {
     beats->update();
 
 
-    if (beats->triggerBeat()) {
+    if (beats->triggerEighth()) {
 
         if (walkBeats > 0) {
             walk();
@@ -84,6 +84,8 @@ void Puppet::nodFor(int cycles) {
 
 }
 
+//////////////////////////////
+
 void Puppet::walk() {
 
     toggleWalk = !toggleWalk;
@@ -124,13 +126,13 @@ void Puppet::wave() {
 };
 
 void Puppet::nod() {
-
+//    beats->setBPM(40);
     toggleNoddle = !toggleNoddle;
 
     if (toggleNoddle) {
-        nodUp(6);
+        nodUp(90);
     } else {
-        nodDown(6);
+        nodDown(0);
     }
 };
 
@@ -138,45 +140,48 @@ void Puppet::nod() {
 
 
 void Puppet::riseLeftWing(int degrees) {
-    R1->tween(degrees, 0.4, Joint::EaseIn);
+    R1->tween(degrees, 0.3, Joint::EaseIn);
 }
 
 void Puppet::riseRightWing(int degrees) {
-    R2->tween(degrees, 0.4, Joint::EaseIn);
+    R2->tween(degrees, 0.3, Joint::EaseIn);
 }
 
 void Puppet::dropLeftWing(int degrees) {
-    R1->tween(degrees, 0.4, Joint::EaseOut);
+    R1->tween(degrees, 0.4, Joint::EaseIn);
 }
 
 void Puppet::dropRightWing(int degrees) {
-    R2->tween(degrees, 0.4, Joint::EaseOut);
+    R2->tween(degrees, 0.4, Joint::EaseIn);
 }
 
+
+
+
 void Puppet::riseLeftLeg(int degrees) {
-    F1->tween(degrees, 0.4, Joint::EaseIn);
+    F1->tween(degrees, 0.3, Joint::EaseIn);
 }
 
 void Puppet::riseRightLeg(int degrees) {
-    F2->tween(degrees, 0.4, Joint::EaseIn);
+    F2->tween(degrees, 0.3, Joint::EaseIn);
 }
 
 void Puppet::dropLeftLeg(int degrees) {
-    F1->tween(degrees, 0.4, Joint::EaseOut);
+    F1->tween(degrees, 0.3, Joint::EaseOut);
 }
 
 void Puppet::dropRightLeg(int degrees) {
-    F2->tween(degrees, 0.4, Joint::EaseOut);
+    F2->tween(degrees, 0.3, Joint::EaseOut);
 }
 
-void Puppet::nodUp(int speed) {
+void Puppet::nodUp(int degrees) {
     Serial.print("nod up.. ");
-    HEAD->rotate(80, 0.2);
+    HEAD->tween(degrees, 0.3, Joint::EaseOut);
 }
 
-void Puppet::nodDown(int speed) {
+void Puppet::nodDown(int degrees) {
     Serial.print("nod down.. ");
-    HEAD->rotate(90, 0.2);
+    HEAD->tween(degrees, 0.3, Joint::EaseOut);
 }
 
 void Puppet::stopNod() {

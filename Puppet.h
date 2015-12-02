@@ -80,9 +80,9 @@ private:
 
     void dropRightLeg(int degrees = 0);
 
-    void nodUp(int speed = 0);
+    void nodUp(int degrees = 90);
 
-    void nodDown(int speed = 0);
+    void nodDown(int degrees = 0);
 };
 
 #endif
