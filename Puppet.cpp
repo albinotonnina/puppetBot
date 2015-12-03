@@ -1,198 +1,88 @@
 #include "Puppet.h"
 
-void Puppet::init(Beats &_beats, Joint &_F1, Joint &_F2, Joint &_R1, Joint &_R2, Joint &_HEAD) {
-    beats = &_beats;
-    F1 = &_F1;
-    F2 = &_F2;
-    R1 = &_R1;
-    R2 = &_R2;
-    HEAD = &_HEAD;
+Beats *beats;
+ServoEaser F1;
+ServoEaser F2;
+ServoEaser R1;
+ServoEaser R2;
+ServoEaser HEAD;
 
+Adafruit_PWMServoDriver pwmDriver = Adafruit_PWMServoDriver();
+
+// configurable list of servo moves
+int walkMovesCount = 2;
+ServoMove _walkMovesLeft[] = {{45, 100}, {0,  500}};
+ServoMove _walkMovesRight[] = {{0, 100}, {45,  500}};
+
+int headMoveCount = 2;
+ServoMove _headMove[] = {{90, 800}, {0,  800}};
+
+ServoMove *headMove = _headMove;
+ServoMove *walkMovesLeft = _walkMovesLeft;
+ServoMove *walkMovesRight = _walkMovesRight;
+
+int servoFrameMillis = 20;  // minimum time between servo updates
+
+void Puppet::init(Beats &_beats) {
+    pwmDriver.begin();
+    pwmDriver.setPWMFreq(60);
+
+    F1.begin(pwmDriver, 0, servoFrameMillis);
+    F2.begin(pwmDriver, 1, servoFrameMillis);
+    F2.setFlipped(true);
+    R1.begin(pwmDriver, 2, servoFrameMillis);
+    R1.setFlipped(true);
+    R2.begin(pwmDriver, 3, servoFrameMillis);
+
+    HEAD.begin(pwmDriver, 4, servoFrameMillis);
+
+    beats = &_beats;
 }
 
 void Puppet::start() {
-    toggleWalk = false;
-    toggleFly = false;
-    toggleWave = false;
-    toggleNoddle = false;
     beats->start();
 }
 
 void Puppet::update() {
 
-    F1->update();
-    F2->update();
-    R1->update();
-    R2->update();
-    HEAD->update();
+    F1.update();
+    F2.update();
+    R1.update();
+    R2.update();
+    HEAD.update();
 
-    beats->update();
-
-
-    if (beats->triggerEighth()) {
-
-        if (walkBeats > 0) {
-            walk();
-            walkBeats--;
-        }
-
-        if (flyBeats > 0) {
-            fly();
-            flyBeats--;
-        }
-
-        if (waveBeats > 0) {
-            wave();
-            waveBeats--;
-        }
-
-        if (nodBeats > 0) {
-            nod();
-            nodBeats--;
-        } else {
-            //stopNod();
-        }
-
-    }
+}
 
 
+void Puppet::resetPosition() {
+    F1.stop();
+    F2.stop();
+    R1.stop();
+    R2.stop();
+}
+
+void resetF2(int currPos, int movesIndex){
+    F2.easeTo(0,400);
 }
 
 void Puppet::walkFor(int cycles) {
+    F1.play(walkMovesLeft, walkMovesCount, cycles);
+    F2.play(walkMovesRight, walkMovesCount, cycles);
 
-    if (walkBeats == 0) {
-        walkBeats = cycles * 2;
-    }
-
+    F1.setArrivedFunc(resetF2);
 }
 
 void Puppet::flyFor(int cycles) {
-
-    if (flyBeats == 0) {
-        flyBeats = cycles * 2;
-    }
-
+    R1.play(walkMovesLeft, walkMovesCount, cycles);
+    R2.play(walkMovesLeft, walkMovesCount, cycles);
 }
 
 void Puppet::waveFor(int cycles) {
-
-    if (waveBeats == 0) {
-        waveBeats = cycles * 2;
-    }
-
+    R2.play(walkMovesLeft, walkMovesCount, cycles);
 }
 
 void Puppet::nodFor(int cycles) {
-
-    if (nodBeats == 0) {
-        nodBeats = cycles * 2;
-    }
-
+    HEAD.play(headMove, headMoveCount, cycles);
 }
-
-//////////////////////////////
-
-void Puppet::walk() {
-
-    toggleWalk = !toggleWalk;
-
-    if (toggleWalk) {
-        riseRightLeg();
-        dropLeftLeg();
-    } else {
-        riseLeftLeg();
-        dropRightLeg();
-    }
-}
-
-
-void Puppet::fly() {
-
-    toggleFly = !toggleFly;
-
-    if (toggleFly) {
-        riseLeftWing();
-        riseRightWing();
-    } else {
-        dropLeftWing();
-        dropRightWing();
-    }
-};
-
-
-void Puppet::wave() {
-
-    toggleWave = !toggleWave;
-
-    if (toggleWave) {
-        riseLeftWing(30);
-    } else {
-        dropLeftWing();
-    }
-};
-
-void Puppet::nod() {
-//    beats->setBPM(40);
-    toggleNoddle = !toggleNoddle;
-
-    if (toggleNoddle) {
-        nodUp(90);
-    } else {
-        nodDown(0);
-    }
-};
-
-
-
-
-void Puppet::riseLeftWing(int degrees) {
-    R1->tween(degrees, 0.3, Joint::EaseIn);
-}
-
-void Puppet::riseRightWing(int degrees) {
-    R2->tween(degrees, 0.3, Joint::EaseIn);
-}
-
-void Puppet::dropLeftWing(int degrees) {
-    R1->tween(degrees, 0.4, Joint::EaseIn);
-}
-
-void Puppet::dropRightWing(int degrees) {
-    R2->tween(degrees, 0.4, Joint::EaseIn);
-}
-
-
-
-
-void Puppet::riseLeftLeg(int degrees) {
-    F1->tween(degrees, 0.3, Joint::EaseIn);
-}
-
-void Puppet::riseRightLeg(int degrees) {
-    F2->tween(degrees, 0.3, Joint::EaseIn);
-}
-
-void Puppet::dropLeftLeg(int degrees) {
-    F1->tween(degrees, 0.3, Joint::EaseOut);
-}
-
-void Puppet::dropRightLeg(int degrees) {
-    F2->tween(degrees, 0.3, Joint::EaseOut);
-}
-
-void Puppet::nodUp(int degrees) {
-    Serial.print("nod up.. ");
-    HEAD->tween(degrees, 0.3, Joint::EaseOut);
-}
-
-void Puppet::nodDown(int degrees) {
-    Serial.print("nod down.. ");
-    HEAD->tween(degrees, 0.3, Joint::EaseOut);
-}
-
-void Puppet::stopNod() {
-    Serial.println("stop nodding");
-    HEAD->stop();
-};
 
 

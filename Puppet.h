@@ -2,28 +2,18 @@
 #define Puppet_H
 
 #include <Arduino.h>
-#include "Joint.h"
+#include "ServoEaser.h"
+#include "Adafruit_PWMServoDriver.h"
 #include "Beats.h"
 
 class Puppet {
 public:
 
 
-    Beats *beats;
-    Joint *F1;
-    Joint *F2;
-    Joint *R1;
-    Joint *R2;
-    Joint *HEAD;
 
 
     void init(
-            Beats &_beats,
-            Joint &_F1,
-            Joint &_F2,
-            Joint &_R1,
-            Joint &_R2,
-            Joint &_HEAD
+            Beats &_beats
     );
 
     void start();
@@ -38,51 +28,18 @@ public:
 
     void nodFor(int cycles);
 
-    void stopNod();
+    void resetPosition();
+
 
 private:
 
-    bool toggleWalk;
-    bool toggleFly;
-    bool toggleWave;
-    bool toggleNoddle;
-    int walkBeats;
-    int flyBeats;
-    int waveBeats;
-    int nodBeats;
-
-    bool isFlying;
-    bool isWalking;
-    bool isWaving;
-
-    void fly();
-
-    void walk();
-
-    void wave();
-
-    void nod();
 
 
-    void riseLeftWing(int degrees = 45);
 
-    void riseRightWing(int degrees = 45);
 
-    void dropLeftWing(int degrees = 0);
 
-    void dropRightWing(int degrees = 0);
 
-    void riseLeftLeg(int degrees = 45);
 
-    void riseRightLeg(int degrees = 45);
-
-    void dropLeftLeg(int degrees = 0);
-
-    void dropRightLeg(int degrees = 0);
-
-    void nodUp(int degrees = 90);
-
-    void nodDown(int degrees = 0);
 };
 
 #endif
