@@ -11,15 +11,20 @@ Adafruit_PWMServoDriver pwmDriver = Adafruit_PWMServoDriver();
 
 // configurable list of servo moves
 int walkMovesCount = 2;
-ServoMove _walkMovesLeft[] = {{45, 100}, {0,  500}};
-ServoMove _walkMovesRight[] = {{0, 100}, {45,  500}};
-
-int headMoveCount = 2;
-ServoMove _headMove[] = {{90, 800}, {0,  800}};
-
-ServoMove *headMove = _headMove;
+ServoMove _walkMovesLeft[] = {{45, 300}, {0,  300}};
+ServoMove _walkMovesRight[] = {{0, 300}, {45,  300}};
 ServoMove *walkMovesLeft = _walkMovesLeft;
 ServoMove *walkMovesRight = _walkMovesRight;
+
+
+int headMoveCount = 2;
+ServoMove _headMove[] = {{70, 500}, {0,  500}};
+ServoMove *headMove = _headMove;
+
+int tapMoveCount = 2;
+ServoMove _tapMove[] = {{45, 800},{0, 800}};
+ServoMove *tapMove = _tapMove;
+
 
 int servoFrameMillis = 20;  // minimum time between servo updates
 
@@ -72,17 +77,30 @@ void Puppet::walkFor(int cycles) {
     F1.setArrivedFunc(resetF2);
 }
 
+
+
+int flyMovesCount = 2;
+ServoMove _flyMoves[] = {{60, 400}, {0,  400}};
+ServoMove *flyMoves= _flyMoves;
+
+
 void Puppet::flyFor(int cycles) {
-    R1.play(walkMovesLeft, walkMovesCount, cycles);
-    R2.play(walkMovesLeft, walkMovesCount, cycles);
+
+    R1.play(flyMoves, flyMovesCount, cycles);
+    R2.play(flyMoves, flyMovesCount, cycles);
 }
 
 void Puppet::waveFor(int cycles) {
-    R2.play(walkMovesLeft, walkMovesCount, cycles);
+    R1.play(walkMovesLeft, walkMovesCount, cycles);
 }
 
 void Puppet::nodFor(int cycles) {
     HEAD.play(headMove, headMoveCount, cycles);
+}
+
+
+void Puppet::tapFor(int cycles) {
+    F1.play(tapMove, tapMoveCount, cycles);
 }
 
 

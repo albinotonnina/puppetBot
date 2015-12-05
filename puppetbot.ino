@@ -41,6 +41,7 @@ void updateBeats() {
 
 void decodeIrCommands(){
     if (irrecv.decode(&results)) {
+//        Serial.println(results.value, HEX);
 
         switch (results.value) {
             case 0xFF6897: //1
@@ -54,6 +55,9 @@ void decodeIrCommands(){
                 break;
             case 0xFF30CF: //4
                 puppet.nodFor(5);
+                break;
+            case 0xFF18E7: //5
+                puppet.tapFor(5);
                 break;
         }
 

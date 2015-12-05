@@ -9,9 +9,6 @@
 class Puppet {
 public:
 
-
-
-
     void init(
             Beats &_beats
     );
@@ -28,16 +25,12 @@ public:
 
     void nodFor(int cycles);
 
+    void tapFor(int cycles);
+
     void resetPosition();
 
 
 private:
-
-
-
-
-
-
 
 
 };
