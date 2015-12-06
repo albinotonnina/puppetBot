@@ -86,9 +86,9 @@ public:
     // tell a servo to play a list of servo moves
     // movesCount is number of moves in the list
     // movesReps is number of times to repeat
-    void play( ServoMove* moves, int movesCount);
-    void play( ServoMove* moves, int movesCount, int movesReps);
-    void play( ServoMove* moves, int movesCount, int movesReps, int movesIndex);
+    void play( ServoMove moves[], int movesCount);
+    void play( ServoMove moves[], int movesCount, int movesReps);
+    void play( ServoMove moves[], int movesCount, int movesReps, int movesIndex);
 
     // for manual movement of the servo (non moves list)
     void easeTo( int pos, int durMillis );
