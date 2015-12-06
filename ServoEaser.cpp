@@ -131,7 +131,7 @@ void ServoEaser::getNextPos() {
     if (movesCount == 0) { // not in a moves list
         arrived = true;
         stop();
-        if (arrivedFunc != NULL) { arrivedFunc(currPos, movesIndex); }
+      //  if (arrivedFunc != NULL) { arrivedFunc(currPos, movesIndex); }
         return;
     }
 

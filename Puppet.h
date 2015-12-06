@@ -29,7 +29,6 @@ public:
 
     void resetPosition();
 
-
 private:
 
 
